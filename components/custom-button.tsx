@@ -2,15 +2,16 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 interface CustomButonType {
-  title : string,
-  width : string,
-  handlePress : ()=>void
+  title : string;
+  otherStyles? : string;
+  handlePress : ()=>void;
+  isLoading? : boolean;
 }
 
-const CustomButton = ({ title, width, handlePress } : CustomButonType ) => {
+const CustomButton = ({ title, otherStyles, handlePress, isLoading } : CustomButonType ) => {
   return (
     <TouchableOpacity 
-      className={`bg-secondary rounded-full py-3 ${width}`}
+      className={`bg-secondary rounded-full py-3 ${otherStyles}`}
       activeOpacity={0.7}
       onPress={handlePress}  
     >
