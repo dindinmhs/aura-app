@@ -1,4 +1,5 @@
 import { appWriteConfig, client, databases } from "@/lib/appWriteConfig"
+import { UserDocument } from "@/types/user"
 import { Account, Avatars, ID, Query } from "react-native-appwrite"
 
 const account = new Account(client)
@@ -55,7 +56,7 @@ export const getCurrentUser = async () => {
         )
 
         if (!currentUser) throw Error
-        return currentUser.documents[0]
+        return currentUser.documents[0] as UserDocument
     } catch (error) {
         console.error(error)
     }

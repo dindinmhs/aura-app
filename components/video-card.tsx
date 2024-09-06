@@ -1,12 +1,13 @@
-import { View, Text, Image } from 'react-native'
-import React from 'react'
+import { View, Text } from 'react-native'
+import React, { useState } from 'react'
 import { VideoDocument } from '@/types/video'
 import Profile from './profile'
 import MoreButton from './more-button'
+import Thumbnail from './thumbnail'
 
 const VideoCard = ({video : { video, title, prompt, thumbnail, creator : {avatar, username} }} : {video : VideoDocument}) => {
     return (
-        <View className='mb-6'>
+        <View className='mb-10'>
             <View>
                 <View className='flex-row items-center justify-between'>
                     <View className='flex-row items-center'>
@@ -18,10 +19,11 @@ const VideoCard = ({video : { video, title, prompt, thumbnail, creator : {avatar
                     </View>
                     <MoreButton/>
                 </View>
-                <Image
-                    className='w-full h-[180px] mt-3 rounded-lg'
-                    resizeMode='cover'
-                    source={{ uri : thumbnail}}
+                <Thumbnail
+                    containerStyles='mt-3 h-[180px]'
+                    thumbnail={thumbnail}
+                    iconSize={40}
+                    video={video}
                 />
             </View>
         </View>

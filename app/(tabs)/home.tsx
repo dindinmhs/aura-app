@@ -7,12 +7,16 @@ import SearchInput from '@/components/search-input'
 import HorizontalList from '@/components/horizontal-list'
 import EmptyState from '@/components/empty-state'
 import useAppWrite from '@/hooks/videos'
-import { getAllPosts } from '@/services/video'
+import { getAllPosts, getLatestPost } from '@/services/video'
 import VideoCard from '@/components/video-card'
+import { GlobalContextType, useGlobalContext } from '@/context/global-provider'
 
 const Home = () => {
-  const { data, refetch } = useAppWrite(getAllPosts)
+  const { user } = useGlobalContext() as GlobalContextType
 
+  const { data : posts, refetch } = useAppWrite(getAllPosts)
+  const { data : latest } = useAppWrite(getLatestPost)
+  
   const [refreshing, setRefreshing] = useState(false)
 
   const onRefresh = async () => {
@@ -27,18 +31,18 @@ const Home = () => {
         ListHeaderComponent={()=>(
           <View className='mt-4'>
             <View className='flex-row items-center justify-between'>
-              <View>
+              <View className='max-w-[75%]'>
                 <Text className='text-gray-300 text-lg' style={{ fontFamily : 'Suse-Bold' }}>Welcome Back</Text>
-                <Text className='text-white text-2xl' style={{ fontFamily : 'Suse-Bold' }}>Dindin Imanudin</Text>
+                <Text className='text-white text-2xl' style={{ fontFamily : 'Suse-Bold' }}>{user?.username}</Text>
               </View>
               <MaterialIcons name="local-fire-department" size={45} color={red}/>
             </View>
             <SearchInput placeholder='Search a video topic' otherStyles='my-4'/>
             <Text className='text-gray-200 text-lg' style={{ fontFamily : 'Suse-Bold' }}>Latest Video</Text>
-            <HorizontalList data={[{id : 1}, {id:2}]}/>
+            {latest && <HorizontalList data={latest}/>}
           </View>
         )}
-        data={data}
+        data={posts}
         renderItem={({ item }) => <VideoCard video={item}/>}
         ListEmptyComponent={()=>(
           <EmptyState message='Be the first one to upload a video' size={80}/>

@@ -1,11 +1,11 @@
 import { getCurrentUser } from "@/services/users";
-import { userType } from "@/types/user";
+import { UserDocument, userType } from "@/types/user";
 import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
 
 export interface GlobalContextType {
-    user : userType|null|undefined;
-    setUser : Dispatch<SetStateAction<userType|null|undefined>>;
+    user : UserDocument|undefined|null;
+    setUser : Dispatch<SetStateAction<UserDocument|undefined|null>>;
     isLoggedIn : boolean;
     setLoggedIn : Dispatch<SetStateAction<boolean>>;
     isLoading : boolean;
@@ -13,23 +13,22 @@ export interface GlobalContextType {
 
 const GlobalContext = createContext<GlobalContextType|null>(null)
 
-export const useGlobalContext = () => useContext(GlobalContext)
 
 const GlobalProvider = ({ children } : { children : React.ReactNode }) => {
     const [isLoggedIn, setLoggedIn] = useState(false)
     const [isLoading, setLoading] = useState(true)
-    const [user, setUser] = useState<userType|null|undefined>(null)
-
+    const [user, setUser] = useState<UserDocument|undefined|null>(null)
+    
     useEffect(()=>{
         const checkSession = async () => {
             try {
                 const user = await getCurrentUser()
-
+                
                 if (!user) {
                     setUser(null)
                     setLoggedIn(false)
                 }
-
+                
                 setUser(user)
                 setLoggedIn(true)
             } catch (error) {
@@ -38,26 +37,24 @@ const GlobalProvider = ({ children } : { children : React.ReactNode }) => {
                 setLoading(false)
             }
         }
-
+        
         checkSession()
     },[])
 
-    useEffect(()=>{
-        console.log(user)
-    },[user])
-
     return (
     <GlobalContext.Provider
-        value={{
-            user,
-            setUser,
+    value={{
+        user,
+        setUser,
             isLoggedIn,
             setLoggedIn,
             isLoading
         }}
-    >
+        >
         {children}
     </GlobalContext.Provider>)
 };
+
+export const useGlobalContext = () => useContext(GlobalContext)
 
 export default GlobalProvider
