@@ -2,7 +2,7 @@ import { VideoType } from "@/types/video";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 
-const useAppWrite = <T>(fn : ()=>Promise<T>) => {
+const useAppWrite = <T>(fn : (query? : string)=>Promise<T>) => {
     const [data, setData] = useState<T>()
     const [isLoading, setLoading] = useState(false)
 

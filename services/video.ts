@@ -26,3 +26,16 @@ export const getLatestPost = async () => {
         console.error(error)
     }
 };
+
+export const searchPost = async (query : string) => {
+    try {
+        const posts = await databases.listDocuments(
+            appWriteConfig.databaseId as string,
+            appWriteConfig.videoCollectionId as string,
+            [Query.search('title', query)]
+        )
+        return posts.documents as VideoDocument[]
+    } catch (error:any) {
+        console.error(error)
+    }
+};
