@@ -1,8 +1,6 @@
-import { View, Text } from 'react-native'
 import React, { ComponentProps } from 'react'
 import { Tabs } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
-import Entypo from '@expo/vector-icons/Entypo';
 import { IconProps } from '@expo/vector-icons/build/createIconSet';
 import { dark, red } from '@/constants/Colors';
 
@@ -54,16 +52,6 @@ const TabsLayout = () => {
                 headerShown : false,
                 tabBarIcon : ({color, focused})=>(
                     <TabIcon color={color} name='person'/>
-                )
-            }}
-        />
-        <Tabs.Screen
-            name='bookmark'
-            options={{
-                title : "Bookmark",
-                headerShown : false,
-                tabBarIcon : ({color, focused})=>(
-                    <TabIcon color={color} name='bookmarks'/>
                 )
             }}
         />

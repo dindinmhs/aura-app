@@ -1,5 +1,5 @@
-import { View, Text, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, FlatList, ActivityIndicator } from 'react-native'
+import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { MaterialIcons } from '@expo/vector-icons'
 import { red } from '@/constants/Colors'
@@ -13,7 +13,7 @@ import { useLocalSearchParams } from 'expo-router'
 const Search = () => {
     const param : { query : string } = useLocalSearchParams() 
 
-    const { data : posts, refetch } = useAppWrite(()=>searchPost(param.query))
+    const { data : posts, refetch, isLoading } = useAppWrite(()=>searchPost(param.query))
 
 
     useEffect(()=>{
@@ -22,7 +22,8 @@ const Search = () => {
 
     return (
         <SafeAreaView className='bg-primary h-full'>
-        <FlatList
+        {isLoading?<ActivityIndicator className='m-auto' size={"large"} color={red}/>:
+            <FlatList
             className='px-4'
             ListHeaderComponent={()=>(
             <View className='mt-4'>
@@ -41,7 +42,7 @@ const Search = () => {
             ListEmptyComponent={()=>(
             <EmptyState message='Be the first one to upload a video' size={80}/>
             )}
-        />
+        />}
         </SafeAreaView>
     )
 }

@@ -1,5 +1,6 @@
 import CustomButton from "@/components/custom-button";
 import Logo from "@/components/logo";
+import OpenScreen from "@/components/open-screen";
 import StatusBarLigth from "@/components/status-bar";
 import { GlobalContextType, useGlobalContext } from "@/context/global-provider";
 import { Redirect, router } from "expo-router";
@@ -8,6 +9,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const {isLoading, isLoggedIn} = useGlobalContext() as GlobalContextType
+
+  if (isLoading) return <OpenScreen/>
 
   if (!isLoading && isLoggedIn) return <Redirect href="/home"/>
 

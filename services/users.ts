@@ -27,7 +27,7 @@ export const createUser = async (username : string, email : string, password : s
             }
         )
 
-        return newUser
+        return newUser as UserDocument
     } catch (error:any) {
         console.error(error)
         throw new Error(error)
@@ -57,6 +57,15 @@ export const getCurrentUser = async () => {
 
         if (!currentUser) throw Error
         return currentUser.documents[0] as UserDocument
+    } catch (error) {
+        console.error(error)
+    }
+};
+
+export const signOut = async () => {
+    try {
+        const session = await account.deleteSession('current')
+        return session
     } catch (error) {
         console.error(error)
     }

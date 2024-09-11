@@ -7,7 +7,7 @@ export const appWriteConfig = {
     databaseId : process.env.EXPO_PUBLIC_DATABASE_ID,
     userCollectionId : process.env.EXPO_PUBLIC_USER_COLLECTION_ID,
     videoCollectionId : process.env.EXPO_PUBLIC_VIDEO_COLLETION_ID,
-    storageId : process.env.EXPO_PUBLIC_STORAHE_ID
+    storageId : process.env.EXPO_PUBLIC_STORAGE_ID
 }
 
 const client = new Client();
